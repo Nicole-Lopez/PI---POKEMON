@@ -71,14 +71,44 @@ const getbyName= async (namePok)=>{
 
 
 const getPo = async (req, res, next)=>{
-  const{name}=req.query
-  const call= await getAllPokemons()
-
+  const{name, page, order}=req.query
+  // const call= await getAllPokemons()
+  await getAllPokemons()
   try {
     if(name){
       return res.send(await getbyName(name))
     }
-    res.send(call)  
+
+    else if(page){
+      let char = await Pokemon.findAll({
+        limit: 12,
+        offset: page,
+        include: { 
+          model: Type,
+          attributes: ['name']
+        }
+      });
+      return res.send(char)
+    }
+
+    else if(order){
+      let ord = await Pokemon.findAll({
+        order: [["name", order]],
+      })
+      return res.send(ord)
+    }
+
+    else{
+      return res.send(await Pokemon.findAll({
+        include: { 
+          model: Type,
+          attributes: ['name']
+        }
+      }))
+    }
+
+
+    // res.send(call)  
 
   } 
   catch (err) {
