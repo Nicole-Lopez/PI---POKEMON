@@ -2,113 +2,103 @@ const axios = require('axios');
 const { Type, Pokemon, pokemon_types } = require('../db.js');
 
 const get40 = async () => { 
+  try {
+    let urlOne = 'https://pokeapi.co/api/v2/pokemon'
+    let resOne = await axios.get(urlOne)
+    let first20Poks =resOne.data.results
 
-    let i =1
-    while (i <= 40) {
-      let url = 'https://pokeapi.co/api/v2/pokemon'+'/'+i
-      const apiPok = await axios.get(url) 
+    let urlTwo = resOne.data.next
+    let resTwo = await axios.get(urlTwo)
+    let second20Poks = resTwo.data.results
 
-
-      let info = []
-      for (let e in apiPok.data){
-        info.push(apiPok.data[e])
-      }
-
-      const [pokemon, created] = await Pokemon.findOrCreate({
-        where: { 
-          name: info[10],
-          ide: info[6],
-          img: info[14].other.dream_world.front_default,
-          hp: info[15][0].base_stat,
-          attack: info[15][1].base_stat,
-          defense: info[15][2].base_stat,
-          speed: info[15][5].base_stat,
-          height: info[4],
-          weight: info[17],
-          fromApi: true
-        },
-      });
+    let poks40= first20Poks.concat(second20Poks)
     
-    
+    let arr=[]
+    for (var i = 0; i < poks40.length; i++) {
+      let detail = await axios.get(poks40[i].url)
+      let pok = detail.data
 
-    let typeDb = await Type.findAll({
-      where:{
-        name: info[16].map(types => types.type.name),
-      }
-     })
-    pokemon.addType(typeDb)
-     
-      i++;
+        let pokemon={
+            name: pok.name,
+            ide: pok.id,
+            img: pok.sprites.other.dream_world.front_default,
+            hp: pok.stats[0].base_stat,
+            attack: pok.stats[1].base_stat,
+            defense: pok.stats[2].base_stat,
+            speed: pok.stats[5].base_stat,
+            height: pok.height,
+            weight: pok.weight,
+            fromApi: true,
+            types: pok.types.map(types => types.type.name),
+        }
+        
+      arr.push(pokemon)
     }
+    return arr
 
-
+  }catch(err){
+    console.log(err)
+  }
 }
 
-const getAllPokemons = async ()=>{
-  await get40()
-  let tableData = await Pokemon.findAll();
-  return tableData;  
+
+
+const getDB= async ()=>{
+  let pokesDB = await Pokemon.findAll({
+    include: {
+      model: Type,
+      atributes: ['name'],
+    },
+  });
+
+  let pokesDetail = pokesDB.map((e) => {
+    return { 
+      ...e.dataValues, 
+      types: e.dataValues.types.map((tip) => tip.dataValues.name) 
+    }
+  });
+
+  return pokesDetail
 }
+
+const getAllPokemons= async ()=>{
+  let api = await get40()
+  let db = await getDB()
+
+  if (!db) {
+    return api
+  } else {
+    let total = api.concat(db);  
+    return total
+  }
+}
+
+
 
 
 const getbyName= async (namePok)=>{
   let all= await getAllPokemons()
   
-  let filtro=all.find((p)=>p.name==namePok)
+  let filtro=[all.find((p)=>p.name.toLowerCase()==namePok.toLowerCase())]
 
   if (filtro) {
     return filtro    
   } else {
     return 'No se ha encontrado este pokemon'
-  }
-
+  }   
 }
 
 
-
-
-
-
-
 const getPo = async (req, res, next)=>{
-  const{name, page, order}=req.query
-  // const call= await getAllPokemons()
-  await getAllPokemons()
+  const{ name }=req.query
+
   try {
     if(name){
-      return res.send(await getbyName(name))
+      return res.status(200).send(await getbyName(name))
     }
-
-    else if(page){
-      let char = await Pokemon.findAll({
-        limit: 12,
-        offset: page,
-        include: { 
-          model: Type,
-          attributes: ['name']
-        }
-      });
-      return res.send(char)
-    }
-
-    else if(order){
-      let ord = await Pokemon.findAll({
-        order: [["name", order]],
-      })
-      return res.send(ord)
-    }
-
     else{
-      return res.send(await Pokemon.findAll({
-        include: { 
-          model: Type,
-          attributes: ['name']
-        }
-      }))
+      return res.status(200).send(await getAllPokemons())
     }
-
-
-    // res.send(call)  
 
   } 
   catch (err) {

@@ -7,7 +7,7 @@ const findbyid= async (id)=>{
   let filtro=all.find((p)=>p.ide==id)
 
   if (filtro) {
-    return filtro    
+    return [filtro]    
   } else {
     return 'No se ha encontrado este pokemon'
   }
