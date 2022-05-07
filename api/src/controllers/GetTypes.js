@@ -3,7 +3,6 @@ const { Type } = require('../db.js');
 
 const dataFromApi = async ()=>{
 	const dataApiTypes = await axios.get("https://pokeapi.co/api/v2/type")
-	console.log(dataApiTypes.data.results)
 	return dataApiTypes.data.results;
 }
 
@@ -15,8 +14,8 @@ const getTypes = async (req, res, next)=>{
 
 		if (!tableData.length) await Type.bulkCreate(apiTypes)
 
-		let newCall = await Type.findAll();
-		res.send(newCall)	
+		let total = await Type.findAll();
+		res.send(total)	
 
 	} catch (err) {
       next(err)

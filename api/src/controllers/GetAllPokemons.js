@@ -1,6 +1,9 @@
 const axios = require('axios');
 const { Type, Pokemon, pokemon_types } = require('../db.js');
 
+const capitalizeFirstLetter=(str) => str.charAt(0).toUpperCase() + str.slice(1);
+
+
 const get40 = async () => { 
   try {
     let urlOne = 'https://pokeapi.co/api/v2/pokemon'
@@ -19,7 +22,7 @@ const get40 = async () => {
       let pok = detail.data
 
         let pokemon={
-            name: pok.name,
+            name: capitalizeFirstLetter(pok.name),
             ide: pok.id,
             img: pok.sprites.other.dream_world.front_default,
             hp: pok.stats[0].base_stat,
@@ -54,7 +57,8 @@ const getDB= async ()=>{
   let pokesDetail = pokesDB.map((e) => {
     return { 
       ...e.dataValues, 
-      types: e.dataValues.types.map((tip) => tip.dataValues.name) 
+      name:capitalizeFirstLetter(e.name),
+      types: e.dataValues.types.map((tip) => capitalizeFirstLetter(tip.dataValues.name)) 
     }
   });
 
@@ -65,12 +69,7 @@ const getAllPokemons= async ()=>{
   let api = await get40()
   let db = await getDB()
 
-  if (!db) {
-    return api
-  } else {
-    let total = api.concat(db);  
-    return total
-  }
+  return (!db)? api : api.concat(db)
 }
 
 
@@ -78,14 +77,11 @@ const getAllPokemons= async ()=>{
 
 const getbyName= async (namePok)=>{
   let all= await getAllPokemons()
-  
-  let filtro=[all.find((p)=>p.name.toLowerCase()==namePok.toLowerCase())]
 
-  if (filtro) {
-    return filtro    
-  } else {
-    return 'No se ha encontrado este pokemon'
-  }   
+  let filtro=all.find((p)=>p.name.toLowerCase()==namePok.toLowerCase())
+  
+  return (filtro!==undefined) ? [filtro]: 'This pokemon was not found'
+     
 }
 
 
@@ -93,13 +89,7 @@ const getPo = async (req, res, next)=>{
   const{ name }=req.query
 
   try {
-    if(name){
-      return res.status(200).send(await getbyName(name))
-    }
-    else{
-      return res.status(200).send(await getAllPokemons())
-    }
-
+    return (name)? res.status(200).send(await getbyName(name)): res.status(200).send(await getAllPokemons())
   } 
   catch (err) {
     next(err)

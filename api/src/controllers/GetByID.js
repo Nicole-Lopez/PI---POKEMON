@@ -4,22 +4,18 @@ const { get40, getAllPokemons } = require('../controllers/GetAllPokemons');
 const findbyid= async (id)=>{
 	let all=await getAllPokemons()
   
-  let filtro=all.find((p)=>p.ide==id)
+  let filter=all.find((p)=>p.ide==id)
 
-  if (filtro) {
-    return [filtro]    
-  } else {
-    return 'No se ha encontrado este pokemon'
-  }
-
+  return (filter) ? [filter] :'This pokemon was not found'
 }
 
-
-const getbyID = async (req, res)=>{
+const getbyID = async (req, res, next)=>{
 	const { id }=req.params
-	
-	res.send(await findbyid(id))	
-
+	try{
+    res.send(await findbyid(id))  
+  }catch(err){
+    next(err)
+  }
 }
 
 module.exports = {

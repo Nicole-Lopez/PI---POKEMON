@@ -1,17 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// import './css/landing.css'
+import '../assets/styles/containers/LandingPage.css'
 
-function LandingPage() {
+export default function LandingPage() {
     return(
-        <div>
-           <h1>PAGINA DE BIENVENIDA</h1>
+        <div id='landing'>
+           <h1>WELCOME</h1>
             <Link to='./pokemons'>
-            	<button>Ingresar</button>
+            	<button>GO!</button>
             </Link>
         </div>
     )
 };
-
-
-export default LandingPage;

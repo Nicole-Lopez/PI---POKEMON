@@ -1,9 +1,10 @@
 import React from "react";
+import '../assets/styles/containers/PokemonCreate.css'
 import { useEffect , useState, useMemo} from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { pokemonCreate, getType} from '../redux/actions/index'
 import {useDispatch, useSelector} from 'react-redux';
-
+import BtnReturn from '../components/BtnReturn'
 
 const numberValidation=(number)=> (number < 1 || number > 1000)? true : false
 
@@ -151,12 +152,12 @@ const disableSubmit = ()=> (input.name.length > 0 && input.tipos.length >= 1)? f
 
 
 	return (
-		<div>
-			<Link to='/'><button>Volver</button></Link>
-			<h1>Crea tu poke</h1>
+		<div id='formCreate'>
+			<BtnReturn />
+			<h1>CREATE YOUR POKEMON</h1>
 			<form onSubmit={(e)=>handleSubmit(e)} id='form'>
 				<div>
-					<label>Name:</label>
+					<label>Name: </label>
 					<input 
 					type="text" 
 					value={input.name}
@@ -168,7 +169,7 @@ const disableSubmit = ()=> (input.name.length > 0 && input.tipos.length >= 1)? f
 				</div>
 
 				<div>
-					<label>Imagen:</label>
+					<label>Image: </label>
 					<input 
 					type="text" 
 					value={input.img}
@@ -180,7 +181,7 @@ const disableSubmit = ()=> (input.name.length > 0 && input.tipos.length >= 1)? f
 				</div>
 
 				<div>
-					<label>hp:</label>
+					<label>HP: </label>
 					<input 
 					type="number" 
 					value={input.hp}
@@ -191,7 +192,7 @@ const disableSubmit = ()=> (input.name.length > 0 && input.tipos.length >= 1)? f
 				</div>
 
 				<div>
-					<label>attack:</label>
+					<label>Attack: </label>
 					<input 
 					type="number" 
 					value={input.attack}
@@ -202,7 +203,7 @@ const disableSubmit = ()=> (input.name.length > 0 && input.tipos.length >= 1)? f
 				</div>
 
 				<div>
-					<label>defense:</label>
+					<label>Defense: </label>
 					<input 
 					type="number" 
 					value={input.defense}
@@ -213,7 +214,7 @@ const disableSubmit = ()=> (input.name.length > 0 && input.tipos.length >= 1)? f
 				</div>
 
 				<div>
-					<label>speed:</label>
+					<label>Speed: </label>
 					<input 
 					type="number" 
 					value={input.speed}
@@ -224,7 +225,7 @@ const disableSubmit = ()=> (input.name.length > 0 && input.tipos.length >= 1)? f
 				</div>
 
 				<div>
-					<label>height:</label>
+					<label>Height: </label>
 					<input 
 					type="number" 
 					value={input.height}
@@ -235,7 +236,7 @@ const disableSubmit = ()=> (input.name.length > 0 && input.tipos.length >= 1)? f
 				</div>
 
 				<div>
-					<label>weight:</label>
+					<label>Weight: </label>
 					<input 
 					type="number" 
 					value={input.weight}
@@ -246,9 +247,8 @@ const disableSubmit = ()=> (input.name.length > 0 && input.tipos.length >= 1)? f
 				</div>
 
 				<div>
-					<label>Tipos:</label>
+					<label>Types: </label>
           			<select onChange={(e)=>handleSelect(e)}>
-            		<option disabled value='Tipo poke'>Tipo poke</option>
     				{
         			typs.map((el) => (
         			    <option key={el.id} value={el.name}>{el.name}</option>
@@ -257,16 +257,19 @@ const disableSubmit = ()=> (input.name.length > 0 && input.tipos.length >= 1)? f
     				</select>
 					
 				</div>
-				<button type="submit" disabled={disableSubmit()}>Crear</button>
+				<button className='submit' type="submit" disabled={disableSubmit()}>Crear</button>
 
 
 			</form>
+			<div className='listTypes'>
 			{input.tipos.map(el =>
-				<div>
-					<p>{el}</p>
+				<div className='typePreview'>
+					<span>{el}</span>
 					<button onClick={()=> handleDelete(el)}>X</button>
-				</div>)
-			}
+				</div>
+
+				)
+			}</div>
 		</div>
 	)
 

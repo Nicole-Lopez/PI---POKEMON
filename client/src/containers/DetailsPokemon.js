@@ -1,14 +1,14 @@
  import React from 'react';
+import '../assets/styles/components/Detail.css'
 import {Link} from 'react-router-dom'
 import Detail from '../components/Detail'
+import BtnReturn from '../components/BtnReturn'
 
  export default function DetailsPokemon() {
      return ( 
-         <div className='container'>
+         <div id='detailContainer'>
             <Detail />
-            <Link to='/pokemons'>
-            <button>Volver</button>
-            </Link>
+			<BtnReturn />
          </div>
      )
  }

@@ -39,12 +39,7 @@ const createPoke = async (req, res, next) => {
 	    }
 	})
 	
-	if (pokeCreated.addType(typeDb)) {
-		return res.status(200).send('Pokemon creado con exito')
-	} else {
-		return res.status(404).send('Error en cargar pokemon')
-	}
- 
+	return (pokeCreated.addType(typeDb))?res.status(200).send('Successful creation'): res.status(404).send('Failed creation')
 }
 
 

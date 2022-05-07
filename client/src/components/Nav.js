@@ -1,9 +1,12 @@
 import React from 'react'
-import {useState, useEffect} from 'react';
+import '../assets/styles/components/Nav.css'
+import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {getPokemon, filterByOrder, filterByAttack, getType, filterByType, filterByDb, filterByHp, menorHp} from '../redux/actions/index'
+import {getPokemon, filterByOrder, filterByAttack, getType, filterByType, filterByDb} from '../redux/actions/index'
 import SearchBar from './SearchBar';
+import logo from '../assets/static/logo.png'
+import pokSil from '../assets/static/silhouette.png'
 
 export default function Nav ({setCurrentPage , setOrder}) {
     const dispatch = useDispatch()
@@ -17,11 +20,9 @@ export default function Nav ({setCurrentPage , setOrder}) {
     },[dispatch])
     
 
-    // function handleClick (e){
-    //     dispatch(getPokemon())
-    // }
+
     function handleOrder(e){
-        // e.preventDefault();
+        e.preventDefault();
         dispatch(filterByOrder(e.target.value))
         setCurrentPage(1);
         setOrder(`ordenando ${e.target.value}`)
@@ -35,61 +36,61 @@ export default function Nav ({setCurrentPage , setOrder}) {
     }   
     function handleFilterType (e){
         dispatch(filterByType(e.target.value))
+        setCurrentPage(1);
+        setOrder(`ordenando ${e.target.value}`)        
     }
     function handleCreated(e){
         dispatch(filterByDb(e.target.value))
         setCurrentPage(1);
-        // setOrder(`ordenando ${e.target.value}`)
+        setOrder(`ordenando ${e.target.value}`)
     }
     
    
     
         
-    return (
-       
+    return (        
+        <div id='nav'>
+            <div className='navTop'>
+                <Link to='/pokemons/create'> 
+                    <button className='btnHomeCreate'>CREATE YOUR POKEMON! <img src={pokSil} alt="."/></button>  
+                </Link>
+                <img id='logo' src={logo} alt='Logo pokemon'/>
+                <SearchBar/>
+            </div>
 
-                
-        <div className='flex'>
-           <img src='#' alt='AL parecer este es logo'/>
-           <SearchBar/>
-        <Link to='/pokemons/create'>  
-            <button>Crear pokemon</button>  
-        </Link>
+            <div className='navBottom'>
+                <select onChange={(e) => handleOrder(e)}>
+                    <option selected disabled>ORDER ALPHABETICALLY</option>
+                    <option value="all">DEFAULT</option>
+                    <option value='asc'>A-Z</option>
+                    <option value='des'>Z-A</option>
+                </select>
 
-        {/*<button onClick={(e) => handleClick(e)}>Cargar todos los pokemones</button>*/}
-        
-        <select onChange={(e) => handleOrder(e)}>
-            <option disabled >Ordenar alfabeticamente</option>
-            <option value='asc'>A-Z</option>
-            <option value='des'>Z-A</option>
-        </select>
+                <select onChange={(e) => handleAttack(e)} >
+                    <option selected disabled>FILTER BY ATTACK</option>
+                    <option value="all">ALL</option>
+                    <option value='major'>WEAK TO STRONG</option>
+                    <option value='minor'>STRONG TO WEAK</option>
+                </select>
 
-        <select onChange={(e) => handleAttack(e)} >
-            <option disabled >Filtro fuerza</option>         
-            <option value='major'>Menor Fuerza</option>
-            <option value='minor'>Mayor Fuerza</option>
-        </select>
+                <select onChange={e=> handleCreated(e)}>
+                    <option selected disabled>FILTER BY ORIGIN</option>
+                    <option value="all">ALL</option>
+                    <option value="db">CREATED</option>
+                    <option value="api">EXISTING</option>
+                </select>
 
-        <select onChange={(e) => handleFilterType (e)}>
-              
-            <option disabled >Tipos de pokemones</option>
-            <option value="allTypes">Todos</option>
-            {
-                allTypes?.map(el => {
-                    return (
-                        <option key={el.id} name={el.name}>{el.name}</option>
+                <select onChange={(e) => handleFilterType (e)}>
+                    <option selected disabled>TYPES</option>
+                    <option value="allTypes">ALL</option>
+                    {allTypes?.map(el => {
+                        return (
+                            <option key={el.id} name={el.name}>{el.name}</option>
                         )
-                    })
-            }
-        </select>
-        
-        <select onChange={e=> handleCreated(e)}>
-            <option value="all">Todos</option>
-            <option value="db">Creados</option>
-            <option value="api">Existente</option>
-        </select>
-      
-
+                    })}
+                </select>
+                
+            </div>
             
         </div>
               

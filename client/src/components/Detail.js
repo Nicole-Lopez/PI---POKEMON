@@ -1,8 +1,11 @@
 import React from 'react';
-import  {useEffect, useState} from 'react';
+import  {useEffect} from 'react';
 import {getDetail} from '../redux/actions/index';
 import {useDispatch, useSelector } from 'react-redux'
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import Loader from './Loader.js'
+import '../assets/styles/components/Detail.css'
+import sil from '../assets/static/silhouette.png'
 
 export default function Detail() {
   
@@ -15,39 +18,39 @@ useEffect(() => {
     dispatch(getDetail(id))
 }, [dispatch, id])
 
+function capitalizeFirstLetter(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
 return (
-    <div className='idpoke'>
+    <div id='detail'>
        
         { 
          pokemonDetail.length > 0?
 
 
-         <div>
-            
-          <img src={pokemonDetail[0].img? pokemonDetail[0].img : pokemonDetail[0].img ?pokemonDetail[0].img : 'https://i.pinimg.com/564x/7a/89/9a/7a899ae5a7bf99e40fef753983427222.jpg'} alt='img not found'/> 
-                
-          <h1>Name: {pokemonDetail[0].name? pokemonDetail[0].name :null}</h1>
-          <p>{pokemonDetail[0].ide? pokemonDetail[0].ide :null}</p>
-          <p>HP: {pokemonDetail[0].hp? pokemonDetail[0].hp :null}</p>
-          <p>Attack: {pokemonDetail[0].attack? pokemonDetail[0].attack :null}</p>
-          <p>Defense: {pokemonDetail[0].defense? pokemonDetail[0].defense :null}</p>
-          <p>Speed: {pokemonDetail[0].speed? pokemonDetail[0].speed :null}</p>
-          <p>Height: {pokemonDetail[0].height? pokemonDetail[0].height :null}</p>
-          <p>Weigth: {pokemonDetail[0].weight? pokemonDetail[0].weight :null}</p>  
-          <p>Tipos: {pokemonDetail[0].types? pokemonDetail[0].types.map(el => el + ' ') :null}</p>
-                     
+        <div className='pokeDet'>
+          <div className='detLeft'>
+            <div className='ide'>
+              <p>{pokemonDetail[0].ide? pokemonDetail[0].ide :null}</p>         
+            </div>
+            <img src={pokemonDetail[0].img? pokemonDetail[0].img : sil} alt={pokemonDetail[0].name}/> 
+          </div>    
+          <div className='detRigth'>      
+            <p className='info'><span>NAME: </span>{pokemonDetail[0].name? pokemonDetail[0].name :null}</p>
+            <p className='info'><span>HP:</span> {pokemonDetail[0].hp? pokemonDetail[0].hp :null}</p>
+            <p className='info'><span>ATTACK:</span> {pokemonDetail[0].attack? pokemonDetail[0].attack :null}</p>
+            <p className='info'><span>DEFENSE:</span> {pokemonDetail[0].defense? pokemonDetail[0].defense :null}</p>
+            <p className='info'><span>SPEED:</span> {pokemonDetail[0].speed? pokemonDetail[0].speed :null}</p>
+            <p className='info'><span>HEIGHT:</span> {pokemonDetail[0].height? pokemonDetail[0].height :null}</p>
+            <p className='info'><span>WEIGTH:</span> {pokemonDetail[0].weight? pokemonDetail[0].weight :null}</p>  
+            <p className='info'><span>TYPES:</span> {pokemonDetail[0].types? pokemonDetail[0].types.map(el => <p>• {capitalizeFirstLetter(el)}</p>) :null}</p>
+          </div>            
          </div> :
-          <div className='loading'> 
-              Cargando...
-              
-          </div> 
+         <Loader/>
 
 }          
     </div>
-  
-                        
-
   
 )
 

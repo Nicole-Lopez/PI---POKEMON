@@ -1,23 +1,12 @@
 import React from 'react'
-// import './Loader.css'
-// import loding from '../../img/loader.png'
+import '../assets/styles/components/Loader.css'
+import load from '../assets/static/pikachu.gif'
 
 export default function Loader () {
-
-
-
-
-
     return  (
-        <div className="loader">
-        <div>
-         <img src='{loding}' alt='loading...' />
+        <div id="loader">
+            <img src={load} alt='loading...' />
+            <p>Loading pokemons...</p>
         </div>
-        <div>
-            <p className='loding'>Cargando pokemons!</p>
-        </div>
-        </div>
-
-
-      );
+    );
 }
