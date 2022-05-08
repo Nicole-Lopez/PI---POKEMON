@@ -20,5 +20,5 @@ describe('Pokemon routes', () => {
     it('should get 200', () =>
       agent.get('/pokemons').expect(200)
     );
-  });
+  }); 
 });

@@ -3,7 +3,7 @@ import axios from 'axios'
 export function getPokemon () {
     return async function (dispatch) {
         try{
-        let info= await axios.get('http://localhost:3001/pokemons')
+        let info= await axios.get('/pokemons')
             return dispatch({        
                 type: 'GET_POKEMONS',
                 payload: info.data
@@ -17,7 +17,7 @@ export function getPokemon () {
 export function getType () {
     return async function (dispatch) {
         try{
-        let info= await axios.get('http://localhost:3001/types')
+        let info= await axios.get('/types')
         return dispatch({        
             type: 'GET_TYPES',
             payload: info.data
@@ -37,7 +37,7 @@ export function clear (){
 export function getDetail (id) {
     return async function (dispatch) {
         try{
-        let info= await axios.get('http://localhost:3001/pokemons/'+id)
+        let info= await axios.get('/pokemons/'+id)
             return dispatch({        
                 type: 'POKEMON_ID',
                 payload: info.data
@@ -52,7 +52,7 @@ export function getDetail (id) {
 export function getPokeName (name){
     return async function (dispatch){
         try{
-            let info= await axios.get('http://localhost:3001/pokemons?name='+ name)   
+            let info= await axios.get('/pokemons?name='+ name)   
             if (info.data =="This pokemon was not found") {
                 return dispatch ({
                     type: 'ERROR',
@@ -79,7 +79,7 @@ export function getPokeName (name){
     
 export function pokemonCreate (payload){
     return async function (dispatch){
-        const response = axios.post('http://localhost:3001/pokemons', payload)
+        const response = axios.post('/pokemons', payload)
         return response;
     }
 }
