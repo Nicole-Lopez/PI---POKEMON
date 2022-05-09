@@ -89,7 +89,20 @@ const getPo = async (req, res, next)=>{
   const{ name }=req.query
 
   try {
-    return (name)? res.status(200).send(await getbyName(name)): res.status(200).send(await getAllPokemons())
+    if (name) {
+      let rta= await getbyName(name)
+      if (rta == 'This pokemon was not found') {
+        return res.status(404).json({ msg: rta});
+      } else{
+        return res.status(200).json(rta)
+      }
+
+
+    } else {
+      res.status(200).send(await getAllPokemons())
+    }
+
+
   } 
   catch (err) {
     next(err)

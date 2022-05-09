@@ -5,7 +5,8 @@ import {useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom';
 import Loader from './Loader.js'
 import '../assets/styles/components/Detail.css'
-import sil from '../assets/static/silhouette.png'
+import sil from '../assets/static/silhouette.png';
+
 
 export default function Detail() {
   
@@ -22,6 +23,7 @@ function capitalizeFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+
 return (
     <div id='detail'>
        
@@ -35,6 +37,7 @@ return (
               <p>{pokemonDetail[0].ide? pokemonDetail[0].ide :null}</p>         
             </div>
             <img src={pokemonDetail[0].img? pokemonDetail[0].img : sil} alt={pokemonDetail[0].name}/> 
+            
           </div>    
           <div className='detRigth'>      
             <p className='info'><span>NAME: </span>{pokemonDetail[0].name? pokemonDetail[0].name :null}</p>

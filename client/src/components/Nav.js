@@ -15,7 +15,7 @@ export default function Nav ({setCurrentPage , setOrder}) {
     
     
     useEffect(() => { 
-        dispatch(getPokemon())
+        // dispatch(getPokemon())
         dispatch(getType())
     },[dispatch])
     
@@ -25,24 +25,24 @@ export default function Nav ({setCurrentPage , setOrder}) {
         e.preventDefault();
         dispatch(filterByOrder(e.target.value))
         setCurrentPage(1);
-        setOrder(`ordenando ${e.target.value}`)
+        setOrder(`${e.target.value}`)
     }
 
     function handleAttack(e){
         e.preventDefault();
         dispatch(filterByAttack(e.target.value))
         setCurrentPage(1);
-        setOrder(`ordenando ${e.target.value}`)
+        setOrder(`${e.target.value}`)
     }   
     function handleFilterType (e){
         dispatch(filterByType(e.target.value))
         setCurrentPage(1);
-        setOrder(`ordenando ${e.target.value}`)        
+        setOrder(`${e.target.value}`)        
     }
     function handleCreated(e){
         dispatch(filterByDb(e.target.value))
         setCurrentPage(1);
-        setOrder(`ordenando ${e.target.value}`)
+        setOrder(`${e.target.value}`)
     }
     
    

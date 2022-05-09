@@ -1,7 +1,7 @@
 import React from 'react'
 import {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux'
-import {getPokemon} from '../redux/actions/index'
+import {getPokemon, clear} from '../redux/actions/index'
 import Nav from '../components/Nav'
 import Pokemon from '../components/Pokemon'
 import Pagination from '../components/Pagination'
@@ -27,6 +27,7 @@ export default function HomePage () {
   const currentPokemon = allPokemon.slice(indexOfFirstPoke,indexOfLastPoke)
 
   useEffect(() => { 
+      dispatch(clear())
       dispatch(getPokemon())
   },[dispatch])
 

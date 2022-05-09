@@ -20,7 +20,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     img: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(5000),
     },
     hp: {
       type: DataTypes.INTEGER,

@@ -51,30 +51,25 @@ export function getDetail (id) {
 
 export function getPokeName (name){
     return async function (dispatch){
-        try{
-            let info= await axios.get('/pokemons?name='+ name)   
-            if (info.data =="This pokemon was not found") {
-                return dispatch ({
-                    type: 'ERROR',
-                    payload: info.data
-                })  
-            } else {
+            try{
+                let info= await axios.get('/pokemons?name='+ name)   
                 return dispatch ({
                     type: 'GET_NAME_POKEMON',
                     payload: info.data
                 })  
 
+            }catch(err){
+                return dispatch ({
+                    type: 'ERROR',
+                })  
             }
-              
-            
-
-
-
-        }catch(err){
-            console.log(err)
-        }
     }
 }
+
+
+
+
+
 
     
 export function pokemonCreate (payload){
