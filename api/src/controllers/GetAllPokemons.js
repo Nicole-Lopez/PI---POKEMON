@@ -57,8 +57,8 @@ const getDB= async ()=>{
   let pokesDetail = pokesDB.map((e) => {
     return { 
       ...e.dataValues, 
-      name:capitalizeFirstLetter(e.name),
-      types: e.dataValues.types.map((tip) => capitalizeFirstLetter(tip.dataValues.name)) 
+      name:e.name,
+      types: e.dataValues.types.map((tip) => tip.dataValues.name) 
     }
   });
 
