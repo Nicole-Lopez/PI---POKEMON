@@ -26,33 +26,33 @@ const imgValidation = (name) => {
 const validate=(input)=>{
     let error = {};
 
-    if(!input.name) error.name = 'Ingrese un nombre'
-    if(input.name && !wordValidation(input.name)) error.name = "Solo letras. No puede usar espacios, numeros o caracteres especiales(@#%)"
-    if(input.name.length > 15) error.name = 'Debe contener entre 1 a 15 letras'
+    if(!input.name) error.name = 'Enter a name'
+    if(input.name && !wordValidation(input.name)) error.name = "Only letters. You cannot use spaces, numbers or special characters(@#%)"
+    if(input.name.length > 15) error.name = 'Must contain between 1 to 15 letters'
     
-    if (input.img && !imgValidation(input.img)) error.img = 'Ingrese un link valido a una imagen'
+    if (input.img && !imgValidation(input.img)) error.img = 'Enter a valid link to an image'
     
-    if (numberValidation(input.hp)) error.hp = 'Ingrese un numero de 1 a 1000'
-    if (entValidation(input.hp)) error.hp = 'Ingrese un numero entero'
+    if (numberValidation(input.hp)) error.hp = 'For the HP, you must enter a number from 1 to 1000'
+    if (entValidation(input.hp)) error.hp = 'Enter a whole number'
     
 
-    if (numberValidation(input.attack)) error.attack = 'Ingrese un numero de 1 a 1000'     
-    if (entValidation(input.attack)) error.attack = 'Ingrese un numero entero'
+    if (numberValidation(input.attack)) error.attack = 'For the attack, you must enter a number from 1 to 1000'     
+    if (entValidation(input.attack)) error.attack = 'Enter a whole number'
      
 
-    if (numberValidation(input.defense)) error.defense = 'Ingrese un numero de 1 a 1000'
-    if (entValidation(input.defense)) error.defense = 'Ingrese un numero entero'
+    if (numberValidation(input.defense)) error.defense = 'For the defense, you must enter a number from 1 to 1000'
+    if (entValidation(input.defense)) error.defense = 'Enter a whole number'
      
 
-    if (numberValidation(input.speed)) error.speed = 'Ingrese un numero de 1 a 1000'
-    if (entValidation(input.speed)) error.speed = 'Ingrese un numero entero'
+    if (numberValidation(input.speed)) error.speed = 'For the speed, you must enter a number from 1 to 1000'
+    if (entValidation(input.speed)) error.speed = 'Enter a whole number'
          
  
-    if (numberValidation(input.height))error.height = 'Ingrese un numero de 1 a 1000'
-    if (entValidation(input.height))error.height = 'Ingrese un numero entero'
+    if (numberValidation(input.height))error.height = 'For the height, you must enter a number from 1 to 1000'
+    if (entValidation(input.height))error.height = 'Enter a whole number'
     
-    if (numberValidation(input.weight))error.weight = 'Ingrese un numero de 1 a 1000'
-    if (entValidation(input.weight))error.weight = 'Ingrese un numero entero'
+    if (numberValidation(input.weight))error.weight = 'For the weight, you must enter a number from 1 to 1000'
+    if (entValidation(input.weight))error.weight = 'Enter a whole number'
      
     
     return error;
@@ -107,7 +107,7 @@ export default function PokemonCreate() {
 		console.log(input);
 	    if (Object.keys(errors).length === 0){
 			dispatch(pokemonCreate(input))
-			alert('Pokemon creado correctamente')
+			alert('Pokemon created')
 			setInput({
 				name: "",
 				img: "",
@@ -122,7 +122,7 @@ export default function PokemonCreate() {
 			navigate('/pokemons')
 		}
 		else {
-      		alert("Por favor, complete correctamente su pokemon");
+      		alert("Please, enter correct information for your pokemon");
     	}		
 	}
 
@@ -257,7 +257,7 @@ const disableSubmit = ()=> (input.name.length > 0 && input.tipos.length >= 1)? f
     				</select>
 					
 				</div>
-				<button className='submit' type="submit" disabled={disableSubmit()}>Crear</button>
+				<button className='submit' type="submit" disabled={disableSubmit()}>Create</button>
 
 
 			</form>

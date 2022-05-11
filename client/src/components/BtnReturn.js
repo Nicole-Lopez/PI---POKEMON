@@ -6,7 +6,7 @@ export default function BtnReturn() {
    	return ( 
    	    <div id='btnReturn'>
    	       	<Link to='/pokemons'>
-   	       		<button className='return'>↩RETURN</button>
+   	       		<button className='return'>↩BACK</button>
    	       	</Link>
    	    </div>
    	)
