@@ -3,11 +3,18 @@ const { Type, Pokemon, pokemon_types } = require('../db.js');
 const { getAllPokemons } = require('../controllers/GetAllPokemons');
 
 
-let count=40
+let count
+
+const getLastArrItem = (arr) => { 
+  	let lastItem=arr[arr.length-1];  
+  	count=lastItem 
+}   
 
 const createPoke = async (req, res, next) => {
 
- 
+	let num= await getAllPokemons()
+	let iden= num.map((e)=>e.ide)
+	getLastArrItem(iden)
 
     let  {
         name,
@@ -39,7 +46,6 @@ const createPoke = async (req, res, next) => {
 	    }
 	})
 	
-	count++ 
 	return (pokeCreated.addType(typeDb))?res.status(200).send('Successful creation'): res.status(404).send('Failed creation')
 }
 
